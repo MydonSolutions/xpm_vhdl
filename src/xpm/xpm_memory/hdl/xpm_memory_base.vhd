@@ -97,7 +97,7 @@ port (
 end xpm_memory_base;
 
 architecture rtl of xpm_memory_base is
-    type t_generic_ram_init is array (integer range <>, integer range <>) of std_logic;
+    type t_generic_ram_init is array (integer range 0 to MEMORY_SIZE/WRITE_DATA_WIDTH_A-1, integer range WRITE_DATA_WIDTH_A-1 downto 0) of std_logic;
   
     subtype t_meminit_array is t_generic_ram_init;
     
@@ -155,7 +155,7 @@ architecture rtl of xpm_memory_base is
     variable l : line;
     variable tmp_bv : bit_vector(mem_width-1 downto 0);
     variable tmp_sv : std_logic_vector(mem_width-1 downto 0);
-    variable mem: t_meminit_array(0 to mem_size-1, mem_width-1 downto 0) := (others => (others => '0'));
+    variable mem: t_meminit_array := (others => (others => '0'));
     variable status   : file_open_status;
   begin
     if f_empty_file_name(file_name) then
@@ -191,7 +191,7 @@ architecture rtl of xpm_memory_base is
   impure function f_file_to_ramtype return std_logic_vector is
     variable tmp    : std_logic_vector(MEMORY_SIZE-1 downto 0);
     variable n, pos : integer;
-    variable arr    : t_meminit_array(0 to MEMORY_SIZE/WRITE_DATA_WIDTH_A-1, WRITE_DATA_WIDTH_A-1 downto 0);
+    variable arr    : t_meminit_array;
   begin
     -- If no file was given, there is nothing to convert, just return
     if (MEMORY_INIT_FILE = "" or MEMORY_INIT_FILE = "none") then
