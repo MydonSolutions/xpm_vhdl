@@ -301,8 +301,8 @@ architecture rtl of xpm_memory_base is
   type slv_rwa_array is array(0 to READ_LATENCY_A) of std_logic_vector(READ_DATA_WIDTH_A-1 downto 0);
   type slv_rwb_array is array(0 to READ_LATENCY_B) of std_logic_vector(READ_DATA_WIDTH_B-1 downto 0);
   
-  signal output_reg_a: slv_rwa_array;
-  signal output_reg_b: slv_rwb_array;
+  signal output_reg_a: slv_rwa_array := (others => (others => '0'));
+  signal output_reg_b: slv_rwb_array := (others => (others => '0'));
     
 begin
 
